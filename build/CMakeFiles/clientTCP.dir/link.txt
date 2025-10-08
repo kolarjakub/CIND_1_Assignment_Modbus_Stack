@@ -1,0 +1,1 @@
+/usr/bin/cc CMakeFiles/client_objs.dir/src/clientTCP.c.o -o clientTCP 

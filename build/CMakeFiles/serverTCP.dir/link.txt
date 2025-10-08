@@ -1,0 +1,1 @@
+/usr/bin/cc CMakeFiles/server_objs.dir/src/serverTCP.c.o -o serverTCP 

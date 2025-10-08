@@ -1,0 +1,22 @@
+#ifndef MODBUSAP_H
+#define MODBUSAP_H
+
+#include <netinet/in.h>   // pro struct in_addr
+
+#define APDU_HEADER_LEN 6
+
+// Funkce pro zápis více registrů (funkční kód 0x10)
+int Write_multiple_regs(struct in_addr server_add,
+                         uint16_t port,
+                         uint16_t st_r,
+                         uint16_t n_r,
+                         char* val);
+
+// Funkce pro čtení holding registrů (funkční kód 0x03)
+int Read_h_regs(struct in_addr server_add,
+                 uint16_t port,
+                 uint16_t st_r,
+                 uint16_t n_r,
+                 char* val);
+
+#endif // MODBUSAP_H
