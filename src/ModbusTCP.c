@@ -89,6 +89,7 @@ int Send_Modbus_request (struct in_addr server_add, uint16_t port, const char *A
     const uint16_t APDU_R_LEN=(MBAP_R[4]<<8) + MBAP_R[5] -0x0001;    // -1 protože je to i s tím 1 Bztem od Unit Identifier
     free(MBAP_R);
 
+
     char *APDU_R_tmp=malloc(APDU_R_LEN*sizeof(char));
     bzero(APDU_R_tmp,APDU_R_LEN);
     in = recv(socket_descriptor, APDU_R_tmp, APDU_R_LEN, 0); //blokne se to tady dokud to neprijme ten buffer

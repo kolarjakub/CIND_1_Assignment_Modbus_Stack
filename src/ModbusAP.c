@@ -7,13 +7,23 @@
 
 
 // 0x10 Write multiple registers
-int Write_multiple_regs (struct in_addr server_add, uint16_t port, uint16_t st_r, uint16_t n_r, char* val)
+int Write_multiple_regs (struct in_addr server_add, uint16_t port, uint32_t st_r, uint16_t n_r, char* val)
 {
     // check consistency of parameters
     // st_r in range 0x0000 to 0xFFFF
     if (n_r<1 || n_r>123)
     {
         printf("Invalid number of registers...\n");
+        return -1;
+    }
+    if (st_r<1 || st_r>65536)
+    {
+        printf("Starting adress out of range...\n");
+        return -1;
+    }
+    if (st_r + (uint32_t)n_r - 1 > 65536)
+    {
+        printf("Invalid address range: exceeds Modbus limit 65536.\n");
         return -1;
     }
     if (val == NULL)
@@ -32,8 +42,8 @@ int Write_multiple_regs (struct in_addr server_add, uint16_t port, uint16_t st_r
         return -3;
     }
     APDU[0]=0x10;
-    APDU[1]=(st_r >> 8) & 0xFF;
-    APDU[2]= st_r & 0xFF;
+    APDU[1]=((st_r-1) >> 8) & 0xFF;
+    APDU[2]= st_r-1 & 0xFF;
     APDU[3]=(n_r  >> 8) & 0xFF;
     APDU[4]= n_r  & 0xFF;
     APDU[5]=2*n_r;
@@ -80,7 +90,7 @@ int Write_multiple_regs (struct in_addr server_add, uint16_t port, uint16_t st_r
 
 
 // 0x03 Read holding register
-int Read_h_regs(struct in_addr server_add, uint16_t port, uint16_t st_r, uint16_t n_r, char* val)
+int Read_h_regs(struct in_addr server_add, uint16_t port, uint32_t st_r, uint16_t n_r, char* val)
 {
     // check consistency of parameters
 

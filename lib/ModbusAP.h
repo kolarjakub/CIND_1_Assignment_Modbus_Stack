@@ -8,14 +8,14 @@
 // Funkce pro zápis více registrů (funkční kód 0x10)
 int Write_multiple_regs(struct in_addr server_add,
                          uint16_t port,
-                         uint16_t st_r,
+                         uint32_t st_r,
                          uint16_t n_r,
                          char* val);
 
 // Funkce pro čtení holding registrů (funkční kód 0x03)
 int Read_h_regs(struct in_addr server_add,
                  uint16_t port,
-                 uint16_t st_r,
+                 uint32_t st_r,
                  uint16_t n_r,
                  char* val);
 
