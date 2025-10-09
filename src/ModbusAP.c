@@ -16,6 +16,11 @@ int Write_multiple_regs (struct in_addr server_add, uint16_t port, uint16_t st_r
         printf("Invalid number of registers...\n");
         return -1;
     }
+    if ((uint32_t)st_r + (uint32_t)n_r - 1 > 65535)
+    {
+        printf("Invalid address range: exceeds Modbus limit 65535.\n");
+        return -1;
+    }
     if (val == NULL)
     {
         printf("Pointer to values is NULL...\n");
@@ -32,8 +37,8 @@ int Write_multiple_regs (struct in_addr server_add, uint16_t port, uint16_t st_r
         return -3;
     }
     APDU[0]=0x10;
-    APDU[1]=(st_r >> 8) & 0xFF;
-    APDU[2]= st_r & 0xFF;
+    APDU[1]=((st_r-1) >> 8) & 0xFF;
+    APDU[2]= (st_r-1) & 0xFF;
     APDU[3]=(n_r  >> 8) & 0xFF;
     APDU[4]= n_r  & 0xFF;
     APDU[5]=2*n_r;
@@ -49,11 +54,11 @@ int Write_multiple_regs (struct in_addr server_add, uint16_t port, uint16_t st_r
         free(APDU);
         return -4;
     }
-    int req=Send_Modbus_request (server_add, port, APDU, APDUlen, APDU_R);
+    int req=Send_Modbus_request(server_add, port, APDU, APDUlen, APDU_R);
     free(APDU);
     if (req <0)
     {
-        printf("Invalid Modbus request...\n");
+        printf("Unsuccesful return from Send_Modbus_Request...\n");
         free(APDU_R);
         return -5;
     }

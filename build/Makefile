@@ -129,6 +129,19 @@ modbus/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/modbus.dir/build.make CMakeFiles/modbus.dir/build
 .PHONY : modbus/fast
 
+#=============================================================================
+# Target rules for targets named modbus_client
+
+# Build rule for target.
+modbus_client: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 modbus_client
+.PHONY : modbus_client
+
+# fast build rule for target.
+modbus_client/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/modbus_client.dir/build.make CMakeFiles/modbus_client.dir/build
+.PHONY : modbus_client/fast
+
 src/ModbusAP.o: src/ModbusAP.c.o
 .PHONY : src/ModbusAP.o
 
@@ -152,6 +165,30 @@ src/ModbusAP.s: src/ModbusAP.c.s
 src/ModbusAP.c.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/modbus.dir/build.make CMakeFiles/modbus.dir/src/ModbusAP.c.s
 .PHONY : src/ModbusAP.c.s
+
+src/ModbusClient.o: src/ModbusClient.c.o
+.PHONY : src/ModbusClient.o
+
+# target to build an object file
+src/ModbusClient.c.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/modbus_client.dir/build.make CMakeFiles/modbus_client.dir/src/ModbusClient.c.o
+.PHONY : src/ModbusClient.c.o
+
+src/ModbusClient.i: src/ModbusClient.c.i
+.PHONY : src/ModbusClient.i
+
+# target to preprocess a source file
+src/ModbusClient.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/modbus_client.dir/build.make CMakeFiles/modbus_client.dir/src/ModbusClient.c.i
+.PHONY : src/ModbusClient.c.i
+
+src/ModbusClient.s: src/ModbusClient.c.s
+.PHONY : src/ModbusClient.s
+
+# target to generate assembly for a file
+src/ModbusClient.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/modbus_client.dir/build.make CMakeFiles/modbus_client.dir/src/ModbusClient.c.s
+.PHONY : src/ModbusClient.c.s
 
 src/ModbusTCP.o: src/ModbusTCP.c.o
 .PHONY : src/ModbusTCP.o
@@ -186,9 +223,13 @@ help:
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
 	@echo "... modbus"
+	@echo "... modbus_client"
 	@echo "... src/ModbusAP.o"
 	@echo "... src/ModbusAP.i"
 	@echo "... src/ModbusAP.s"
+	@echo "... src/ModbusClient.o"
+	@echo "... src/ModbusClient.i"
+	@echo "... src/ModbusClient.s"
 	@echo "... src/ModbusTCP.o"
 	@echo "... src/ModbusTCP.i"
 	@echo "... src/ModbusTCP.s"
