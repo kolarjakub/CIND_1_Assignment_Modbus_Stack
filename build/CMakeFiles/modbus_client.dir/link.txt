@@ -1,1 +1,0 @@
-/usr/bin/cc CMakeFiles/modbus_client.dir/src/ModbusClient.c.o -o bin/modbus_client  lib/libmodbus.a 
