@@ -1,4 +1,3 @@
 /home/ubuntu/Documents/FEUP/CIND/1_Assignment_Modbus-Stack/build/CMakeFiles/modbus.dir
-/home/ubuntu/Documents/FEUP/CIND/1_Assignment_Modbus-Stack/build/CMakeFiles/modbus_client.dir
 /home/ubuntu/Documents/FEUP/CIND/1_Assignment_Modbus-Stack/build/CMakeFiles/edit_cache.dir
 /home/ubuntu/Documents/FEUP/CIND/1_Assignment_Modbus-Stack/build/CMakeFiles/rebuild_cache.dir

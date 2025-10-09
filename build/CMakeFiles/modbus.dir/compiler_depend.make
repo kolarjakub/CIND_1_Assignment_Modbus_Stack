@@ -164,16 +164,7 @@ CMakeFiles/modbus.dir/src/ModbusTCP.c.o: ../src/ModbusTCP.c \
   /usr/include/aarch64-linux-gnu/bits/stdlib-float.h \
   /usr/lib/gcc/aarch64-linux-gnu/11/include/stdint.h \
   /usr/include/stdint.h \
-  /usr/include/aarch64-linux-gnu/bits/wchar.h \
-  /usr/include/stdio.h \
-  /usr/lib/gcc/aarch64-linux-gnu/11/include/stdarg.h \
-  /usr/include/aarch64-linux-gnu/bits/types/__fpos_t.h \
-  /usr/include/aarch64-linux-gnu/bits/types/__mbstate_t.h \
-  /usr/include/aarch64-linux-gnu/bits/types/__fpos64_t.h \
-  /usr/include/aarch64-linux-gnu/bits/types/__FILE.h \
-  /usr/include/aarch64-linux-gnu/bits/types/FILE.h \
-  /usr/include/aarch64-linux-gnu/bits/types/struct_FILE.h \
-  /usr/include/aarch64-linux-gnu/bits/stdio_lim.h
+  /usr/include/aarch64-linux-gnu/bits/wchar.h
 
 
 /usr/include/aarch64-linux-gnu/bits/unistd_ext.h:

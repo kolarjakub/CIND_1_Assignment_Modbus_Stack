@@ -27,7 +27,7 @@ int Send_Modbus_request (struct in_addr server_add, uint16_t port, const char *A
     PDU[3] = (char)MODBUS_IDENTIFIER & 0xFF;
     PDU[4] = ((APDUlen+1) >> 8) & 0xFF;;
     PDU[5] = (APDUlen+1) & 0xFF;    // +1 kvuli tomu, ze se tam pocita i ten Unit Identifier
-    PDU[6] = SERVER_UNIT_ID;      // Unit ID - has to be the same as the server
+    PDU[6] = 0xFF;
     memcpy(PDU+MBAP_HEADER_LEN, APDU, APDUlen);
 
 
@@ -63,13 +63,9 @@ int Send_Modbus_request (struct in_addr server_add, uint16_t port, const char *A
         free(PDU);
         close(socket_descriptor);
         return -4;
-    }else{
-        printf("Sent data (%d bytes): ", out);
-        for (int i = 0; i < MBAP_HEADER_LEN + APDUlen; i++) {
-            printf("%02X ", (unsigned char)PDU[i]);
-        }
-        printf("\n");
     }
+    else
+        printf("Sent data (%d bytes): %s\n", out, PDU);
     free(PDU);
 
 
@@ -79,7 +75,6 @@ int Send_Modbus_request (struct in_addr server_add, uint16_t port, const char *A
     tv.tv_usec = 0;
     setsockopt(socket_descriptor, SOL_SOCKET, SO_RCVTIMEO, &tv, sizeof(tv));
 
-    //receive PDU_R
     char *MBAP_R=malloc(MBAP_HEADER_LEN*sizeof(char));
     bzero(MBAP_R, MBAP_HEADER_LEN);
     int in = recv(socket_descriptor, MBAP_R, MBAP_HEADER_LEN, 0); //blokne se to tady dokud to neprijme ten buffer
@@ -90,25 +85,10 @@ int Send_Modbus_request (struct in_addr server_add, uint16_t port, const char *A
         close(socket_descriptor);
         return -5;
     }
-    // check transaction ID
-    else if (((MBAP_R[0]<<8)|MBAP_R[1]) != transaction_id){
-        printf("Recv invalid transaction ID..\n");
-        free(MBAP_R);
-        close(socket_descriptor);
-        return -6;
-    }
-    else {
-        printf("Received MBAP header (%d bytes): ", in);
-        for (int i = 0; i < in; i++) {
-            printf("%02X ", (unsigned char)MBAP_R[i]);
-        }
-        printf("\n");
-    }
-
-    const uint16_t APDU_R_LEN=(MBAP_R[4]<<8) + MBAP_R[5] -0x0001;    // -1 protože je to i s tím 1 Bytem od Unit Identifier
+    else printf("Received MBAP header (%d bytes): %s\n", in, MBAP_R);
+    const uint16_t APDU_R_LEN=(MBAP_R[4]<<8) + MBAP_R[5] -0x0001;    // -1 protože je to i s tím 1 Bztem od Unit Identifier
     free(MBAP_R);
 
-    // receive APDU_R
     char *APDU_R_tmp=malloc(APDU_R_LEN*sizeof(char));
     bzero(APDU_R_tmp,APDU_R_LEN);
     in = recv(socket_descriptor, APDU_R_tmp, APDU_R_LEN, 0); //blokne se to tady dokud to neprijme ten buffer
@@ -117,14 +97,10 @@ int Send_Modbus_request (struct in_addr server_add, uint16_t port, const char *A
         printf("Recv failed..\n");
         close(socket_descriptor);
         free(APDU_R_tmp);
-        return -7;
+        return -6;
     }
     else {
-        printf("Received data (%d bytes): ", in);
-        for (int i = 0; i < in; i++) {
-            printf("%02X ", (unsigned char)APDU_R_tmp[i]);
-        }
-        printf("\n");
+        printf("Received data (%d bytes): %s\n", in, APDU_R_tmp);
         memcpy(APDU_R, APDU_R_tmp, APDU_R_LEN);
         free(APDU_R_tmp);
     }
