@@ -19,14 +19,34 @@ int main(){
     inet_aton("127.0.0.1",&server_add);
 
     //struct in_addr server_add;
-    int wr = Write_multiple_regs(server_add, SERVER_PORT, 65536, 1, write_buf);
-    if (wr<0)
+    int wr = Write_multiple_regs(server_add, SERVER_PORT, 65530, 2, write_buf);
+    if (wr>=0)
     {
-        printf("Write registers unsuccesful...\n");
-        return -1;
+        printf("--------------------\nWrite registers succesful...\n");
+        printf("Register values:\n");
+        for (int i = 0; i < 2; i++) {
+            uint16_t value = ((uint8_t)write_buf[i*2] << 8) | (uint8_t)write_buf[1 + i*2];
+            printf("Reg[%d] = %u (0x%04X)\n", 65530 + i, value, value);
+        }
+        printf("--------------------\n\n");
     }else{
-        printf("Write registers succesful...\n");
-        return 0;
+        printf("--------------------\nWrite registers unsuccesful...\n--------------------\n\n");
     }
 
+
+    char read_buf[10]={};
+    int rr=Read_h_regs(server_add, SERVER_PORT, 65529, 5, read_buf);
+    if (rr>=0)
+    {
+        printf("--------------------\nRead registers succesful...\n");
+        printf("Register values:\n");
+        for (int i = 0; i < 5; i++) {
+            uint16_t value = ((uint8_t)read_buf[i*2] << 8) | (uint8_t)read_buf[1 + i*2];
+            printf("Reg[%d] = %u (0x%04X)\n", 65529 + i, value, value);
+        }
+        printf("--------------------\n\n");
+    }else{
+        printf("--------------------\nRead registers succesful...\n--------------------\n\n");
+    }
+    return 0;
 }

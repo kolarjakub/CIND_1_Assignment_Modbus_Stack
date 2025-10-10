@@ -56,16 +56,21 @@ int Send_Modbus_request (struct in_addr server_add, uint16_t port, const char *A
 
 
     //write (fd, PDU, PDUlen); // sends Modbus TCP PDU
-    int out = send(socket_descriptor , PDU , MBAP_HEADER_LEN + APDUlen , 0);
-    if(out < 0)
+    int out = send(socket_descriptor, PDU, MBAP_HEADER_LEN + APDUlen, 0);
+    if (out < 0)
     {
         printf("Send failed..\n");
         free(PDU);
         close(socket_descriptor);
         return -4;
+    }else{
+        printf("Sent data (%d bytes): ", out);
+        for (int i = 0; i < MBAP_HEADER_LEN + APDUlen; i++)
+        {
+            printf("%02X ", (unsigned char)PDU[i]);
+        }
+        printf("\n");
     }
-    else
-        printf("Sent data (%d bytes): %s\n", out, PDU);
     free(PDU);
 
 
@@ -84,8 +89,14 @@ int Send_Modbus_request (struct in_addr server_add, uint16_t port, const char *A
         free(MBAP_R);
         close(socket_descriptor);
         return -5;
+    }else {
+        printf("Received MBAP header (%d bytes): ", in);
+        for (int i = 0; i < MBAP_HEADER_LEN; i++)
+        {
+            printf("%02X ", (unsigned char)MBAP_R[i]);
+        }
+        printf("\n");
     }
-    else printf("Received MBAP header (%d bytes): %s\n", in, MBAP_R);
     const uint16_t APDU_R_LEN=(MBAP_R[4]<<8) + MBAP_R[5] -0x0001;    // -1 protože je to i s tím 1 Bztem od Unit Identifier
     free(MBAP_R);
 
@@ -101,7 +112,13 @@ int Send_Modbus_request (struct in_addr server_add, uint16_t port, const char *A
         return -6;
     }
     else {
-        printf("Received data (%d bytes): %s\n", in, APDU_R_tmp);
+        printf("Received data (%d bytes): ", in);
+        for (int i = 0; i < APDU_R_LEN; i++)
+        {
+            printf("%02X ", (unsigned char)APDU_R[i]);
+        }
+        printf("\n");
+
         memcpy(APDU_R, APDU_R_tmp, APDU_R_LEN);
         free(APDU_R_tmp);
     }
