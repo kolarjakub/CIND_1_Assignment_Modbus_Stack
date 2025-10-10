@@ -94,8 +94,7 @@ int Write_multiple_regs (struct in_addr server_add, uint16_t port, uint32_t st_r
 
 
 // 0x03 Read holding register
-int Read_h_regs(struct in_addr server_add, uint16_t port, uint32_t st_r, uint16_t n_r, char* val)
-{
+int Read_h_regs(struct in_addr server_add, uint16_t port, uint32_t st_r, uint16_t n_r, char* val){
     // check consistency of parameters
     // st_r in range 0x0000 to 0xFFFF
     if (n_r<1 || n_r>125)
