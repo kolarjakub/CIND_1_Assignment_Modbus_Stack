@@ -39,7 +39,7 @@ void Read_h_regs_print(struct in_addr server_add, uint16_t port, uint32_t st_r, 
         }
         printf("--------------------\n\n");
     }else{
-        printf("--------------------\nRead registers succesful...\n--------------------\n\n");
+        printf("--------------------\nRead registers unsuccesful...\n--------------------\n\n");
     }
 }
 

@@ -89,6 +89,11 @@ int Send_Modbus_request (struct in_addr server_add, uint16_t port, const char *A
         free(MBAP_R);
         close(socket_descriptor);
         return -5;
+    }else if ((uint16_t)(MBAP_R[0]<<8)+MBAP_R[1]!=transaction_id) {
+        printf("Transaction ID of sent and received MBAP header does not match...\n");
+        free(MBAP_R);
+        close(socket_descriptor);
+        return -5;
     }else {
         printf("Received MBAP header (%d bytes): ", in);
         for (int i = 0; i < MBAP_HEADER_LEN; i++)
@@ -97,7 +102,7 @@ int Send_Modbus_request (struct in_addr server_add, uint16_t port, const char *A
         }
         printf("\n");
     }
-    const uint16_t APDU_R_LEN=(MBAP_R[4]<<8) + MBAP_R[5] -0x0001;    // -1 protože je to i s tím 1 Bztem od Unit Identifier
+    const uint16_t APDU_R_LEN=(MBAP_R[4]<<8) + MBAP_R[5] -0x0001;    // -1 protože je to i s tím 1 Bytem od Unit Identifier
     free(MBAP_R);
 
 
