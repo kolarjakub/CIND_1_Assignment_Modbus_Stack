@@ -68,7 +68,7 @@ int main(){
         for (int i=1;i<=65536;i=i+2) {
             Read_h_regs_print(server_add, SERVER_PORT, i, number_of_regs, read_buf);
             Write_multiple_regs_print(server_add, SERVER_PORT, i, number_of_regs, write_buf);
-            usleep(100000);  // 100 000 mikrosekund = 0.1 s
+            usleep(1000000);  // 100 000 mikrosekund = 0.1 s
         }
     }
 
