@@ -10,6 +10,7 @@
 #define SERVER_ADDR "127.0.0.1"//"10.227.113.16"
 #define SERVER_PORT 502
 
+#define DEBUG_CLIENT 0
 
 
 void Write_multiple_regs_print (struct in_addr server_add, uint16_t port, uint32_t st_r, uint16_t n_r, char* val) {
@@ -17,14 +18,18 @@ void Write_multiple_regs_print (struct in_addr server_add, uint16_t port, uint32
     if (wr>=0)
     {
         printf("--------------------\nWrite registers succesful...\n");
-        printf("Register values:\n");
-        for (int i = 0; i < n_r; i++) {
-            uint16_t value = ((uint8_t)val[i*2] << 8) | (uint8_t)val[1 + i*2];
-            printf("Reg[%d] = %u (0x%04X)\n", st_r + i, value, value);
-        }
-        printf("--------------------\n\n");
+        #if DEBUG_CLIENT
+            printf("Register values:\n");
+            for (int i = 0; i < n_r; i++) {
+                uint16_t value = ((uint8_t)val[i*2] << 8) | (uint8_t)val[1 + i*2];
+                printf("Reg[%d] = %u (0x%04X)\n", st_r + i, value, value);
+            }
+            printf("--------------------\n\n");
+        #endif
     }else{
-        printf("--------------------\nWrite registers unsuccesful...\n--------------------\n\n");
+        #if DEBUG_CLIENT
+            printf("--------------------\nWrite registers unsuccesful...\n--------------------\n\n");
+        #endif
     }
 }
 
@@ -33,14 +38,18 @@ void Read_h_regs_print(struct in_addr server_add, uint16_t port, uint32_t st_r, 
     if (rr>=0)
     {
         printf("--------------------\nRead registers succesful...\n");
-        printf("Register values:\n");
-        for (int i = 0; i < n_r; i++) {
-            uint16_t value = ((uint8_t)val[i*2] << 8) | (uint8_t)val[1 + i*2];
-            printf("Reg[%d] = %u (0x%04X)\n", st_r + i, value, value);
-        }
-        printf("--------------------\n\n");
+        #if DEBUG_CLIENT
+            printf("Register values:\n");
+            for (int i = 0; i < n_r; i++) {
+                uint16_t value = ((uint8_t)val[i*2] << 8) | (uint8_t)val[1 + i*2];
+                printf("Reg[%d] = %u (0x%04X)\n", st_r + i, value, value);
+            }
+            printf("--------------------\n\n");
+        #endif
     }else{
-        printf("--------------------\nRead registers unsuccesful...\n--------------------\n\n");
+        #if DEBUG_CLIENT
+            printf("--------------------\nRead registers unsuccesful...\n--------------------\n\n");
+        #endif
     }
 }
 
