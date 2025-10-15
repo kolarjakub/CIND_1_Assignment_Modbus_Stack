@@ -6,6 +6,7 @@
 #include <unistd.h>
 #include <stdint.h>
 
+
 #define SERVER_ADDR "127.0.0.1"//"10.227.113.16"
 #define SERVER_PORT 502
 
@@ -57,13 +58,19 @@ int main(){
     uint32_t start_add=65530;
     uint16_t number_of_regs=2;
 
-    Write_multiple_regs_print(server_add, SERVER_PORT, start_add, number_of_regs, write_buf);
 
 
     char read_buf[10]={};
     start_add=65529;
-    number_of_regs=5;
-    Read_h_regs_print(server_add, SERVER_PORT, start_add, number_of_regs, read_buf);
+    number_of_regs=2;
+
+    while (1) {
+        for (int i=1;i<=65536;i=i+2) {
+            Read_h_regs_print(server_add, SERVER_PORT, i, number_of_regs, read_buf);
+            Write_multiple_regs_print(server_add, SERVER_PORT, i, number_of_regs, write_buf);
+            usleep(100000);  // 100 000 mikrosekund = 0.1 s
+        }
+    }
 
     return 0;
 }
