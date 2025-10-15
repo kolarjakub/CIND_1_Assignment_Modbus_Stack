@@ -77,7 +77,7 @@ int Write_multiple_regs (struct in_addr server_add, uint16_t port, uint32_t st_r
         free(APDU_R);
         return 0;
     //}else if (APDU_R[0]==0x90){
-    }else if ((APDU_R[0]>> 7) == 1){
+    }else if (((uint8_t)APDU_R[0]>> 7) == 1){
         printf("Exception code: 0x%02X\n", (uint8_t)APDU_R[1]);
         free(APDU_R);
         return -6;
@@ -160,7 +160,7 @@ int Read_h_regs(struct in_addr server_add, uint16_t port, uint32_t st_r, uint16_
         free(APDU_R);
         return 0;
     //}else if (APDU_R[0]==0x83){
-    }else if ((APDU_R[0]>> 7) == 1){
+    }else if (((uint8_t)APDU_R[0]>> 7) == 1){
         printf("Exception code: 0x%02X\n", (uint8_t)APDU_R[1]);
         free(APDU_R);
         return -6;
