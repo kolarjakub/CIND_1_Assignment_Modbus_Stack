@@ -8,7 +8,6 @@
 
 #define PROTOCOL_IDENTIFIER 0x0000  // specific number for Modbus
 #define UNIT_ID 0x01  // of server
-
 #define DEBUG_TCP 0
 
 int Send_Modbus_request(struct in_addr server_add,

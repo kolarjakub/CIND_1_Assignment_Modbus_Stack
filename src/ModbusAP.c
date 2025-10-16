@@ -98,7 +98,7 @@ int Write_multiple_regs (struct in_addr server_add, uint16_t port, uint32_t st_r
             printf("Exception code: 0x%02X\n", (uint8_t)APDU_R[1]);
         #endif
         free(APDU_R);
-        return -6;
+        return APDU_R[1];   // returning error code of the exception
     }else {
         #if DEBUG_AP
             printf("Unknown response\n");
