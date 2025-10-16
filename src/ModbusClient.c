@@ -15,7 +15,7 @@
 
 void Write_multiple_regs_print (struct in_addr server_add, uint16_t port, uint32_t st_r, uint16_t n_r, char* val) {
     int wr = Write_multiple_regs(server_add, port, st_r, n_r, val);
-    if (wr>=0)
+    if (wr==0)
     {
         printf("--------------------\nWrite registers succesful...\n");
         #if DEBUG_CLIENT
@@ -35,7 +35,7 @@ void Write_multiple_regs_print (struct in_addr server_add, uint16_t port, uint32
 
 void Read_h_regs_print(struct in_addr server_add, uint16_t port, uint32_t st_r, uint16_t n_r, char* val) {
     int rr=Read_h_regs(server_add, port, st_r, n_r, val);
-    if (rr>=0)
+    if (rr==0)
     {
         printf("--------------------\nRead registers succesful...\n");
         #if DEBUG_CLIENT

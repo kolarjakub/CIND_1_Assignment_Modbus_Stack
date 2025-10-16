@@ -29,7 +29,7 @@ int Send_Modbus_request (struct in_addr server_add, uint16_t port, const char *A
     PDU[3] = (char)PROTOCOL_IDENTIFIER & 0xFF;
     PDU[4] = ((APDUlen+1) >> 8) & 0xFF;;
     PDU[5] = (APDUlen+1) & 0xFF;    // +1 kvuli tomu, ze se tam pocita i ten Unit Identifier
-    PDU[6] = 0xFF;  // unit identifier
+    PDU[6] = UNIT_ID;  // unit identifier
     memcpy(PDU+MBAP_HEADER_LEN, APDU, APDUlen);
 
 
