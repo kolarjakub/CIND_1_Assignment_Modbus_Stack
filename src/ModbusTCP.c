@@ -133,7 +133,7 @@ int Send_Modbus_request (struct in_addr server_add, uint16_t port, const char *A
             printf("\n");
         #endif
     }
-    const uint16_t APDU_R_LEN=(MBAP_R[4]<<8) + MBAP_R[5] -0x0001;    // -1 protože je to i s tím 1 Bytem od Unit Identifier
+    const uint16_t APDU_R_LEN=(uint16_t)(MBAP_R[4]<<8) + (uint16_t)MBAP_R[5] -0x0001;    // -1 protože je to i s tím 1 Bytem od Unit Identifier
     free(MBAP_R);
 
 
